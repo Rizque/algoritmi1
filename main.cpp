@@ -8,6 +8,87 @@ int bubbleCount = 0;
 int quickSortCount = 0;
 int mergeCount = 0;
 
+void merge(int array[], int const left, int const mid,int const right);
+void mergeSort(int array[], int const begin, int const end);
+void swap(int* a, int* b);
+int partition(int arr[], int low, int high);
+void quickSort(int arr[], int low, int high);
+void printArray(int arr[], int size);
+void augosiSakartots(int arr[], int n, ofstream &fails);
+void dilstosiSakartots(int arr[], int n, ofstream &fails);
+void bubbleSort(int arr[], int n, ofstream &fails);
+
+int main(){
+    unsigned seed = time(0);
+    srand(seed);
+    bool parbaude1 = true;
+    int minn = 100;
+    int maxn = 1000;
+    int mLength = rand() % (maxn - minn + 1) + minn;
+    int ritv[mLength] = {};
+    int mini = 1;
+    int maxi = 500;
+    for (int i = 0; i < mLength; i++){
+        ritv[i] = rand() % (maxi - mini + 1) + mini;
+    }
+    ofstream fails("rezult.txt");
+        
+    cout << "Sakotnejais masivs: ";
+    fails << "Sakotnejais masivs: ";
+    for (int i = 0; i < mLength; i++){
+        cout << ritv[i] << ", ";
+        fails << ritv[i] << ", ";
+    }
+    cout << endl;
+    fails << endl;    
+    int N = sizeof(ritv) / sizeof(ritv[0]);
+    cout << "Skaitlu skaits masiva: " << N << endl;
+    int choice = 0;
+    cout<< "Kartosanas algoritmu veidi: \n"
+            "1.Izmantojot sort() funkciju \n"
+            "2.Izmantojot sort() funkciju (dilstoss) \n"
+            "3.Bubble metode \n"
+            "4.QuickSort metode \n"
+            "5.Merge metode \n";
+        
+    cout<<"Ievadi kartosanas metodes numuru: ";
+    cin >> choice;
+    switch (choice){
+        case 1:
+            augosiSakartots(ritv, N, fails);
+            break;
+        case 2:
+            dilstosiSakartots(ritv, N, fails);
+            break;
+        case 3:
+            bubbleSort(ritv, N, fails);
+            cout << "Salidzinasanas reizu skaits: "<< bubbleCount;
+            fails << "Salidzinasanas reizu skaits: "<< bubbleCount;
+            break;
+        case 4:
+            cout << "QuickSort algoritms: \n";
+            quickSort(ritv, 0, N - 1);
+            printArray(ritv, N);
+            cout << "Salidzinasanas reizu skaits: "<< quickSortCount;
+            break;
+        case 5:
+            cout << "Merge algoritms: \n";
+            mergeSort(ritv, 0, N - 1);
+            printArray(ritv, N);
+            cout << "Salidzinasanas reizu skaits: "<< mergeCount;
+
+            break;
+        default:
+            cout << "Kluda";
+
+    }
+
+    fails.close();
+
+    return 0;
+}
+
+
 void merge(int array[], int const left, int const mid,
            int const right)
 {
@@ -18,7 +99,7 @@ void merge(int array[], int const left, int const mid,
     auto *leftArray = new int[subArrayOne],
          *rightArray = new int[subArrayTwo];
  
-    // Copy data to temp arrays leftArray[] and rightArray[]
+    // Copy data to temp arrays leftArray[] and rightArray[]  
     for (auto i = 0; i < subArrayOne; i++)
         leftArray[i] = array[left + i];
     for (auto j = 0; j < subArrayTwo; j++)
@@ -192,77 +273,5 @@ void bubbleSort(int arr[], int n, ofstream &fails)
 
 }
  
-
-
-
-int main(){
-    unsigned seed = time(0);
-    srand(seed);
-    bool parbaude1 = true;
-    int minn = 100;
-    int maxn = 1000;
-    int mLength = rand() % (maxn - minn + 1) + minn;
-    int ritv[mLength] = {};
-    int mini = 1;
-    int maxi = 500;
-    for (int i = 0; i < mLength; i++){
-        ritv[i] = rand() % (maxi - mini + 1) + mini;
-    }
-    ofstream fails("rezult.txt");
-        
-    cout << "Sakotnejais masivs: ";
-    fails << "Sakotnejais masivs: ";
-    for (int i = 0; i < mLength; i++){
-        cout << ritv[i] << ", ";
-        fails << ritv[i] << ", ";
-    }
-    cout << endl;
-    fails << endl;    
-    int N = sizeof(ritv) / sizeof(ritv[0]);
-    cout << "Skaitlu skaits masiva: " << N << endl;
-    int choice = 0;
-    cout<< "Kartosanas algoritmu veidi: \n"
-            "1.Izmantojot sort() funkciju \n"
-            "2.Izmantojot sort() funkciju (dilstoss) \n"
-            "3.Bubble metode \n"
-            "4.QuickSort metode \n"
-            "5.Merge metode \n";
-        
-    cout<<"Ievadi kartosanas metodes numuru: ";
-    cin >> choice;
-    switch (choice){
-        case 1:
-            augosiSakartots(ritv, N, fails);
-            break;
-        case 2:
-            dilstosiSakartots(ritv, N, fails);
-            break;
-        case 3:
-            bubbleSort(ritv, N, fails);
-            cout << "Salidzinasanas reizu skaits: "<< bubbleCount;
-            fails << "Salidzinasanas reizu skaits: "<< bubbleCount;
-            break;
-        case 4:
-            cout << "QuickSort algoritms: \n";
-            quickSort(ritv, 0, N - 1);
-            printArray(ritv, N);
-            cout << "Salidzinasanas reizu skaits: "<< quickSortCount;
-            break;
-        case 5:
-            cout << "Merge algoritms: \n";
-            mergeSort(ritv, 0, N - 1);
-            printArray(ritv, N);
-            cout << "Salidzinasanas reizu skaits: "<< mergeCount;
-
-            break;
-        default:
-            cout << "Kluda";
-
-    }
-
-    fails.close();
-
-    return 0;
-}
 
 // Noderīgs materiāls - https://www.programiz.com/dsa/sorting-algorithm
